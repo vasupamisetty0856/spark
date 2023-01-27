@@ -1,0 +1,95 @@
+#to open the pysparkshell execute this command on cloudera 
+=> pyspark
+
+# Execute below commands after opening PySpark Shell 
+# Execute each command one by one
+
+#to import the datatypes into pyspark excute this command
+=> from pyspark.sql.types import StructType,StructField, StringType, IntegerType
+
+#create list of data to prepare dataframe
+
+person_list = [("Berry","","Allen",1,"M"),
+              ("Oliver","Queen","",2,"M"),
+              ("Robert","","Williams",3,"M"),
+              ("Tony","","Stark",4,"F"),
+              ("Rajiv","Mary","Kumar",5,"F")
+]
+
+#defining schema for dataset
+
+schema = StructType([ 
+        StructField("firstname",StringType(),True), 
+        StructField("middlename",StringType(),True),
+        StructField("lastname",StringType(),True), 
+        StructField("id", IntegerType(), True), 
+        StructField("gender", StringType(), True),     
+ ])
+ 
+ # create spark dataframe use this command
+ df = spark.createDataFrame(data=person_list,schema=schema)
+ 
+ #printing data
+ df.show(truncate=False)
+ 
+ # to print the schema use this command
+ df.show(truncate=False)
+ 
+ # to read the spark properties on google use this
+ https://spark.apache.org/docs/latest/sql-data-sources-csv.html
+ 
+  # Read data from HDFS path
+ df2 = spark.read.option("header",True).csv("/user/cloudera/spark_session/department2.csv")
+ 
+ 
+ #to read the schema
+ df2.printSchema()
+  
+   df2.printSchema()
+root
+ |-- DEPARTMENT_ID: string (nullable = true)
+ |-- DEPARTMENT_NAME: string (nullable = true)
+ |-- MANAGER_ID: string (nullable = true)
+ |-- LOCATION_ID: string (nullable = true)
+ 
+ #to identify the correct datatype on schema
+ df3 = spark.read.option("header",True).option("inferSchema",True).csv("/user/cloudera/spark_session/department2.csv")
+ df3.printSchema()
+ 
+  df3.printSchema()
+root
+ |-- DEPARTMENT_ID: integer (nullable = true)
+ |-- DEPARTMENT_NAME: string (nullable = true)
+ |-- MANAGER_ID: string (nullable = true)
+ |-- LOCATION_ID: integer (nullable = true)
+ 
+ >>> df3.show(truncate=False)
++-------------+--------------------+----------+-----------+
+|DEPARTMENT_ID|DEPARTMENT_NAME     |MANAGER_ID|LOCATION_ID|
++-------------+--------------------+----------+-----------+
+|10           |Administration      |200       |1700       |
+|20           |Marketing           |201       |1800       |
+|30           |Purchasing          |114       |1700       |
+|40           |Human Resources     |203       |2400       |
+|50           |Shipping            |121       |1500       |
+|60           |IT                  |103       |1400       |
+|70           |Public Relations    |204       |2700       |
+|80           |Sales               |145       |2500       |
+|90           |Executive           |100       |1700       |
+|100          |Finance             |108       |1700       |
+|110          |Accounting          |205       |1700       |
+|120          |Treasury            | -        |1700       |
+|130          |Corporate Tax       | -        |1700       |
+|140          |Control And Credit  | -        |1700       |
+|150          |Shareholder Services| -        |1700       |
+|160          |Benefits            | -        |1700       |
+|170          |Manufacturing       | -        |1700       |
+|180          |Construction        | -        |1700       |
+|190          |Contracting         | -        |1700       |
+|200          |Operations          | -        |1700       |
++-------------+--------------------+----------+-----------+
+only showing top 20 rows
+
+
+ 
+ 
