@@ -92,4 +92,58 @@ only showing top 20 rows
 
 
  
- 
+ empdf.select(empdf.EMPLOYEE_ID,empdf.FIRST_NAME).show();
++-----------+----------+
+|EMPLOYEE_ID|FIRST_NAME|
++-----------+----------+
+|        198|    Donald|
+|        199|   Douglas|
+|        200|  Jennifer|
+|        201|   Michael|
+|        202|       Pat|
+|        203|     Susan|
+|        204|   Hermann|
+|        205|   Shelley|
+|        206|   William|
+|        100|    Steven|
+|        101|     Neena|
+|        102|       Lex|
+|        103| Alexander|
+|        104|     Bruce|
+|        105|     David|
+|        106|     Valli|
+|        107|     Diana|
+|        108|     Nancy|
+|        109|    Daniel|
+|        110|      John|
++-----------+----------+
+only showing top 20 rows
+
+empdf.select(empdf["EMPLOYEE_ID"],empdf["FIRST_NAME"]).show()
++-----------+----------+
+|EMPLOYEE_ID|FIRST_NAME|
++-----------+----------+
+|        198|    Donald|
+|        199|   Douglas|
+|        200|  Jennifer|
+|        201|   Michael|
+|        202|       Pat|
+|        203|     Susan|
+|        204|   Hermann|
+|        205|   Shelley|
+|        206|   William|
+|        100|    Steven|
+|        101|     Neena|
+|        102|       Lex|
+|        103| Alexander|
+|        104|     Bruce|
+|        105|     David|
+|        106|     Valli|
+|        107|     Diana|
+|        108|     Nancy|
+|        109|    Daniel|
+|        110|      John|
++-----------+----------+
+only showing top 20 rows
+
+
