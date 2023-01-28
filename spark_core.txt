@@ -147,3 +147,5 @@ empdf.select(empdf["EMPLOYEE_ID"],empdf["FIRST_NAME"]).show()
 only showing top 20 rows
 
 
+#to import agregation functions 
+from pyspark.sql.functions import*
