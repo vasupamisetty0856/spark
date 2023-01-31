@@ -152,4 +152,4 @@ from pyspark.sql.functions import*
 
 
 df3.createOrReplaceTempView("employee")
->>> spark.sql("select * from employee limit 50 ").show()
+spark.sql("select * from employee limit 50 ").show()
