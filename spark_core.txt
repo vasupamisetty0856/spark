@@ -149,3 +149,7 @@ only showing top 20 rows
 
 #to import agregation functions 
 from pyspark.sql.functions import*
+
+
+df3.createOrReplaceTempView("employee")
+>>> spark.sql("select * from employee limit 50 ").show()
