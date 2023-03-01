@@ -80,7 +80,7 @@ class ETLPipelinesparkcore {
   
   spark-submit
   ==============
-  spark-submit --class texaspaxkage.texasobj --master yarn --deploy-mode client TexasCount-0.0.1-SNAPSHOT.jar /user/cloudera/txs.csv /user/cloudera/texas02
-  
+  spark-submit --class texaspaxkage.texasobj --master yarn --deploy-mode cluster TexasCount-0.0.1-SNAPSHOT.jar /user/cloudera/txs.csv /user/cloudera/texas05 /user/cloudera/texas06
+
   
   * this command will submit the Spark job to the cluster and write the output to the specified output directory.
