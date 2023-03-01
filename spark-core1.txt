@@ -1,0 +1,86 @@
+find the maximum sold products in Texas and California deploy the code in cloudera clustera 
+
+#below is my spark application written in scala 
+
+spark application
+=================
+
+package texaspaxkage
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkConf
+import org.apache.spark.rdd.RDD
+
+object texasobj {
+  def main(args:Array[String])= {
+   // val conf = new SparkConf().setAppName("texas sales count") 
+    val sc = new SparkContext(master="local[*]",appName = "texas sales count" ) 
+    sc.setLogLevel("Error")
+    
+    if (args.length<2){
+      println("must have 2 input arguments")
+      System.exit(1)
+    }
+    
+    val inputrdd = args(0)
+    val outputrdd1 = args(1)
+    val outputrdd2 = args(2)
+    
+    val rdd1 = sc.textFile(inputrdd)
+    val rdd2 = rdd1.map(x=>x.split(","))
+    
+    val pipeline = new ETLPipelinesparkcore()
+    //pipeline.getMaxSoldProductInTexas(rdd2, outputrdd1)
+    
+    //pipeline.getMaxSoldProductInCalifornia(rdd2,outputrdd2)
+    
+    pipeline.executeresults(rdd2,outputrdd1,outputrdd2)
+  
+  }
+  
+  
+}
+class ETLPipelinesparkcore {
+    def getMaxSoldProductInTexas(rdd:RDD[Array[String]], outputrdd1:String): Unit = {
+      val rdd1 = rdd.filter(x => x(7) == "Texas")
+      val rdd2 = rdd1.map(x =>( x(5),1))
+      val rdd3 = rdd2.reduceByKey((x,y)=>x+y)
+      val rdd4 = rdd3.sortBy(x => x._2,true,1)
+      rdd4.saveAsTextFile(outputrdd1)
+    }
+    
+    def getMaxSoldProductInCalifornia(rdd:RDD[Array[String]], outputrdd2:String): Unit =
+    {
+      val rdd1 = rdd.filter(x => x(7) == "California")
+      val rdd2 = rdd1.map(x =>( x(5),1))
+      val rdd3 = rdd2.reduceByKey((x,y)=>x+y)
+      val rdd4 = rdd3.sortBy(x => x._2,true,1)
+      rdd4.saveAsTextFile(outputrdd2)
+    }
+    
+    def executeresults (rdd:RDD[Array[String]], outputrdd1:String ,outputrdd2:String ): Unit =
+    {
+      getMaxSoldProductInTexas(rdd,outputrdd1)
+      getMaxSoldProductInCalifornia(rdd,outputrdd2)
+      
+    }
+  }
+  
+  
+  * The application takes three input arguments, the input file path, and two output file paths for the results of the two queries.
+  * It creates a Spark context and sets the log level to "Error."
+  * It checks if there are enough input arguments and prints an error message if not.
+  * It reads the input file into an RDD and maps each line to an array of strings by splitting on commas.
+  * It creates an instance of the ETLPipelinesparkcore class and calls its methods to process the RDD and generate the results.
+  * The ETLPipelinesparkcore class contains two methods to find the maximum sold products in Texas and California. Both methods take an RDD of arrays of strings and an output file path as input.
+  * Each method filters the RDD to select only the rows with the state name equal to "Texas" or "California."
+  * Then, it maps each row to a tuple of the product name and 1
+  * Next, it reduces the tuples by the product name and sums the counts to get the total number of sales for each product.
+  * Finally, it sorts the products by the total sales in ascending order and saves the result to the output file path.
+  
+  
+  spark-submit
+  ==============
+  spark-submit --class texaspaxkage.texasobj --master yarn --deploy-mode client TexasCount-0.0.1-SNAPSHOT.jar /user/cloudera/txs.csv /user/cloudera/texas02
+  
+  
+  * this command will submit the Spark job to the cluster and write the output to the specified output directory.
